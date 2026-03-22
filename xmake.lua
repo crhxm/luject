@@ -1,4 +1,4 @@
-set_xmakever("2.9.9")
+set_xmakever("3.0.8")
 
 add_rules("mode.debug", "mode.release")
 add_requires("libxmake", "lief 0.11.5")

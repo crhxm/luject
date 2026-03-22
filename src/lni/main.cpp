@@ -23,16 +23,11 @@
  */
 extern "C"{
 #include <xmake/xmake.h>
+
+extern tb_byte_t const _binary_luafiles_xmz_start[];
+extern tb_byte_t const _binary_luafiles_xmz_end[];
 }
 #include <LIEF/LIEF.hpp>
-
-/* //////////////////////////////////////////////////////////////////////////////////////
- * private implemention
- */
-
-static tb_byte_t const g_luafiles_data[] = {
-    #include "luafiles.xmz.h"
-};
 
 static tb_int_t lni_test_hello(lua_State* lua) {
     lua_pushliteral(lua, "hello xmake!");
@@ -222,7 +217,8 @@ static tb_void_t lni_initalizer(xm_engine_ref_t engine, lua_State* lua)
     ,   {tb_null, tb_null}
     };
     xm_engine_register(engine, "macho", lni_macho_funcs);
-    xm_engine_add_embedfiles(engine, g_luafiles_data, sizeof(g_luafiles_data));
+    xm_engine_add_embedfiles(engine, _binary_luafiles_xmz_start,
+        (tb_size_t)(_binary_luafiles_xmz_end - _binary_luafiles_xmz_start));
 }
 
 /* //////////////////////////////////////////////////////////////////////////////////////
